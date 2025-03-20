@@ -1,0 +1,20 @@
+{
+  "name": "tracking-viction-transfer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node token-monitor.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "dotenv": "^16.4.7",
+    "ethers": "^6.13.5",
+    "web3": "^4.16.0"
+  },
+  "type": "module"
+}
