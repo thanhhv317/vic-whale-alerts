@@ -93,6 +93,6 @@ const sendToChannel = async (message) => {
   await getLatestBlock();
   for (const token of TOKENS_TO_WATCH) {
     token['tokenContract'] =  new web3.eth.Contract(abi, token.address);
-    setInterval(() => trackTokenTransfers(token), 10000)
+    setInterval(() => trackTokenTransfers(token), 60000)
   };
 })();
