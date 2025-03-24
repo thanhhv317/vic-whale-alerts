@@ -54,7 +54,7 @@ const trackTokenTransfers = async (token) => {
 
       if (amount >= token.minAmount) {
         const msg =
-          `🚀 Transfer *${parseFloat(web3.utils.fromWei(amount, "ether")).toFixed(2)}* ${token.symbol} from [${formatAddress(from)}](https://www.vicscan.xyz/address/${from}) to [${formatAddress(to)}](https://www.vicscan.xyz/address/${to}).\nCheck out this transaction [here](https://www.vicscan.xyz/tx/${event.transactionHash})`
+          `🚀 Transfer *${Math.floor(parseFloat(web3.utils.fromWei(amount, "ether"))).toLocaleString()}* ${token.symbol} from [${formatAddress(from)}](https://www.vicscan.xyz/address/${from}) to [${formatAddress(to)}](https://www.vicscan.xyz/address/${to}).\nCheck out this transaction [here](https://www.vicscan.xyz/tx/${event.transactionHash})`
         sendToChannel(msg)
         return
       }
