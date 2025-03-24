@@ -1,6 +1,7 @@
 import Web3 from 'web3'
 import dotenv from "dotenv";
 import abi from './abi.c98.js'
+import { formatAddress } from './utils/index.js'
 
 dotenv.config();
 const RPC_URL = "https://rpc.viction.xyz"
@@ -13,14 +14,14 @@ const TOKENS_TO_WATCH = [
     address: "0x0Fd0288AAAE91eaF935e2eC14b23486f86516c8C",
     symbol: "C98",
     decimals: 18,
-    minAmount: web3.utils.toBigInt(web3.utils.toWei("100000", "ether")), 
+    minAmount: web3.utils.toBigInt(web3.utils.toWei("100000", "ether")),
   },
   {
     address: "0xB786D9c8120D311b948cF1e5Aa48D8fBacf477E2",
     symbol: "SAROS",
-    decimals: 18, 
+    decimals: 18,
     minAmount: web3.utils.toBigInt(web3.utils.toWei("1000000", "ether")), // 1000K Token SAROS
-    },
+  },
   {
     address: "0xc054751bdbd24ae713ba3dc9bd9434abe2abc1ce",
     symbol: "VIC",
@@ -36,10 +37,6 @@ const getLatestBlock = async () => {
   lastCheckedBlock = Number(currentBlock)
   console.log(`🔄 Start tracking from block: ${lastCheckedBlock}`);
 };
-
-const formatAddress = (address) => {
-  return `0x..${address.substring(address.length - 5)}`
-}
 
 const trackTokenTransfers = async (token) => {
   console.log(`tracking ${token.symbol} at ${Date.now()}...`)
@@ -60,7 +57,7 @@ const trackTokenTransfers = async (token) => {
           `🚀 Transfer *${parseFloat(web3.utils.fromWei(amount, "ether")).toFixed(2)}* ${token.symbol} from [${formatAddress(from)}](https://www.vicscan.xyz/address/${from}) to [${formatAddress(to)}](https://www.vicscan.xyz/address/${to}).\nCheck out this transaction [here](https://www.vicscan.xyz/tx/${event.transactionHash})`
         sendToChannel(msg)
         return
-        }
+      }
     });
 
     lastCheckedBlock = Number(latestBlock);
@@ -70,7 +67,7 @@ const trackTokenTransfers = async (token) => {
 };
 
 const sendToChannel = async (message) => {
-  const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN; 
+  const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
   const CHANNEL_ID = process.env.TELEGRAM_CHANNEL_ID;  // or "-100xxxxxxxxx" if it's private channel
   const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
@@ -92,7 +89,7 @@ const sendToChannel = async (message) => {
 (async () => {
   await getLatestBlock();
   for (const token of TOKENS_TO_WATCH) {
-    token['tokenContract'] =  new web3.eth.Contract(abi, token.address);
+    token['tokenContract'] = new web3.eth.Contract(abi, token.address);
     setInterval(() => trackTokenTransfers(token), 60000)
   };
 })();
