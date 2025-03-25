@@ -1,7 +1,7 @@
 import Web3 from 'web3'
 import dotenv from "dotenv";
 import abi from './abi.c98.js'
-import { formatAddress } from './utils/index.js'
+import { formatAddress, getTransactionDetail } from './utils/index.js'
 
 dotenv.config();
 const RPC_URL = "https://rpc.viction.xyz"
@@ -14,7 +14,7 @@ const TOKENS_TO_WATCH = [
     address: "0x0Fd0288AAAE91eaF935e2eC14b23486f86516c8C",
     symbol: "C98",
     decimals: 18,
-    minAmount: web3.utils.toBigInt(web3.utils.toWei("100000", "ether")),
+    minAmount: web3.utils.toBigInt(web3.utils.toWei("40000", "ether")),
   },
   {
     address: "0xB786D9c8120D311b948cF1e5Aa48D8fBacf477E2",
@@ -48,13 +48,17 @@ const trackTokenTransfers = async (token) => {
       toBlock: latestBlock,
     });
 
-    events.forEach((event) => {
+    events.forEach(async (event) => {
       const { from, to, value } = event.returnValues;
       const amount = web3.utils.toBigInt(value);
 
       if (amount >= token.minAmount) {
+
+        const response = await getTransactionDetail(event.transactionHash)
+        const { fromName } = response
+
         const msg =
-          `🚀 Transfer *${Math.floor(parseFloat(web3.utils.fromWei(amount, "ether"))).toLocaleString()}* ${token.symbol} from [${formatAddress(from)}](https://www.vicscan.xyz/address/${from}) to [${formatAddress(to)}](https://www.vicscan.xyz/address/${to}).\nCheck out this transaction [here](https://www.vicscan.xyz/tx/${event.transactionHash})`
+          `🚀 Transfer *${Math.floor(parseFloat(web3.utils.fromWei(amount, "ether"))).toLocaleString()}* ${token.symbol} from [${formatAddress(from, fromName)}](https://www.vicscan.xyz/address/${from}) to [${formatAddress(to)}](https://www.vicscan.xyz/address/${to}).\nCheck out this transaction [here](https://www.vicscan.xyz/tx/${event.transactionHash})`
         sendToChannel(msg)
         return
       }
