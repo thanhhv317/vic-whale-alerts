@@ -27,6 +27,12 @@ const TOKENS_TO_WATCH = [
     symbol: "VIC",
     decimals: 18,
     minAmount: web3.utils.toBigInt(web3.utils.toWei("10000", "ether")), // 10K Token VIC
+  },
+  {
+    address: "0x29cbfe5cd231f2cff086de27f0d820d8b15cc306",
+    symbol: "DADA",
+    decimals: 18,
+    minAmount: web3.utils.toBigInt(web3.utils.toWei("1", "ether")) // 1 token DADA
   }
 ];
 
@@ -94,6 +100,6 @@ const sendToChannel = async (message) => {
   await getLatestBlock();
   for (const token of TOKENS_TO_WATCH) {
     token['tokenContract'] = new web3.eth.Contract(abi, token.address);
-    setInterval(() => trackTokenTransfers(token), 60000)
+    setInterval(() => trackTokenTransfers(token), 30000)
   };
 })();
