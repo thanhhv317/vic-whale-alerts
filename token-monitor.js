@@ -66,7 +66,7 @@ const trackTokenTransfers = async (token) => {
       const { from, to, value } = event.returnValues;
       const amount = web3.utils.toBigInt(value);
 
-      if (amount >= 0) {
+      if (amount >= token.minAmount) {
   
         const response = await getTransactionDetail(event.transactionHash)
         const { fromName } = response
