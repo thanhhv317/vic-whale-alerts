@@ -4,7 +4,8 @@ const WALLET = {
   '0x71ebf8972459b01a50cca14ed351cf34213ed742': 'Rabbit Swap Router',
   '0x6f71ac3058ea167ffab93f7c14b5e2aee9276ce1': 'Bridge',
   '0x1db6ad727ae60d7b4dbee81f79c4bcbcff8759f8': 'Deployer',
-  '0x0000000000000000000000000000000000000000': 'Zero'
+  '0x0000000000000000000000000000000000000000': 'Zero',
+  '0x47502eb628b8cd28a2b3bb3410d941152c629581': 'DADA/C98 pool'
 }
 
 export const formatAddress = (address, fromName = '') => {
