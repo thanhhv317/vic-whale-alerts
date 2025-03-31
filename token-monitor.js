@@ -34,7 +34,7 @@ const TOKENS_TO_WATCH = [
     address: "0x193fcbb7f9eea67cac0d5a94ec7ccf2141c867ec",
     symbol: "DADA",
     decimals: 18,
-    minAmount: web3.utils.toBigInt(web3.utils.toWei("1", "ether")) // 1 token DADA
+    minAmount: web3.utils.toBigInt(web3.utils.toWei("100000", "ether")) // 1 token DADA
   },
   {
     address: "0x69b946132b4a6c74cd29ba3ff614ceea1ef9ff2b",
